@@ -17,7 +17,7 @@ io.on("connection", function (socket) {
     console.log("socket id = ",socketId)
     socketsStatus[socket.id] = {};
 
-    console.log("connected successfully...........",socketsStatus);
+    console.log("connected successfully.............",socketsStatus);
     socket.on("voice", function (data) {
 
         var newData = data.split(";");
@@ -36,7 +36,6 @@ io.on("connection", function (socket) {
 
         io.sockets.emit("usersUpdate", socketsStatus);
     });
-
 
     socket.on("disconnect", function () {
         delete socketsStatus[socketId];
