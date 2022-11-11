@@ -23,7 +23,7 @@ window.onload = (e) => {
   }
 };
 
-var socket = io("ws:https://voicecallingapp.herokuapp.com/");
+var socket = io("https://voicecallingapp.herokuapp.com/");
 // var socket = io("ws:localhost:3000/");
 socket.emit("userInformation", userStatus);
  
