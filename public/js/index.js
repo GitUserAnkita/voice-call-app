@@ -16,13 +16,9 @@ usernameInput.value = userStatus.username;
 usernameLabel.innerText = userStatus.username;
 
 
-
-const paramsString1 = 'http://localhost:3000/?onlineStatus=true';
-const searchParams1 = new URLSearchParams(paramsString1);
-
 window.onload = (e) => {
   mainFunction(1000);
-  if(window.location.href === 'http://localhost:3000/?onlineStatus=true' ){
+  if(window.location.href === 'https://voicecallingapp.herokuapp.com/?onlineStatus=true' ){
     userStatus.online = true
   }
 };
