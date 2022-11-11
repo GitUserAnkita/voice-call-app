@@ -16,21 +16,27 @@ usernameInput.value = userStatus.username;
 usernameLabel.innerText = userStatus.username;
 
 
+
+const paramsString1 = 'http://localhost:3000/?onlineStatus=true';
+const searchParams1 = new URLSearchParams(paramsString1);
+
 window.onload = (e) => {
   mainFunction(1000);
+  if(window.location.href === 'http://localhost:3000/?onlineStatus=true' ){
+    userStatus.online = true
+  }
 };
 
-// var socket = io("ws://localhost:3000");
-var socket = io("https://voicecallingapp.herokuapp.com/")
+var socket = io("ws://localhost:3000");
 socket.emit("userInformation", userStatus);
+ 
 
 
 function mainFunction(time) {
   navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-    console.log("stream =============", stream)
+    
     var madiaRecorder = new MediaRecorder(stream);
     madiaRecorder.start();
-
     var audioChunks = [];
 
     madiaRecorder.addEventListener("dataavailable", function (event) {
@@ -70,17 +76,17 @@ function mainFunction(time) {
     audio.play();
   });
 
-  socket.on("usersUpdate", function (data) {
-    usersDiv.innerHTML = '';
-    for (const key in data) {
-      if (!Object.hasOwnProperty.call(data, key)) continue;
-      const element = data[key];
-      const li = document.createElement("li");
-      li.innerText = element.username;
-      usersDiv.append(li);
+  // socket.on("usersUpdate", function (data) {
+  //   usersDiv.innerHTML = '';
+  //   for (const key in data) {
+  //     if (!Object.hasOwnProperty.call(data, key)) continue;
+  //     const element = data[key];
+  //     const li = document.createElement("li");
+  //     li.innerText = element.username;
+  //     usersDiv.append(li);
 
-    }
-  });
+  //   }
+  // });
 }
 
 usernameLabel.onclick = function () {
@@ -88,16 +94,23 @@ usernameLabel.onclick = function () {
   usernameLabel.style.display = "none";
 }
 
-function changeUsername() {
-  userStatus.username = usernameInput.value;
-  usernameLabel.innerText = userStatus.username;
-  usernameDiv.style.display = "none";
-  usernameLabel.style.display = "block";
-  emitUserInformation();
-}
+// function changeUsername() {
+//   userStatus.username = usernameInput.value;
+//   usernameLabel.innerText = userStatus.username;
+//   usernameDiv.style.display = "none";
+//   usernameLabel.style.display = "block";
+//   emitUserInformation();
+// }
 
 function toggleConnection(e) {
-  userStatus.online = !userStatus.online;
+  // userStatus.online = !userStatus.online;
+  console.log("eeee",e)
+  if(!userStatus.online){
+    userStatus.online = !userStatus.online;
+    window.open('http://localhost:3000?onlineStatus=true','_blanck');
+  
+  }
+
   editButtonClass(e, userStatus.online);
   emitUserInformation();
 }
@@ -117,11 +130,12 @@ function toggleMicrophone(e) {
 
 
 function editButtonClass(target, bool) {
+  console.log("pppp",window.location.search)
   console.log("bool ==========>",bool)             //return true or false
   const classList = target.classList;
   classList.remove("enable-btn");
   classList.remove("disable-btn");
-
+  
   if (bool)
   return classList.add("enable-btn");
   classList.add("disable-btn");
