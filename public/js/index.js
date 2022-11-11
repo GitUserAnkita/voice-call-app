@@ -27,7 +27,8 @@ window.onload = (e) => {
   }
 };
 
-var socket = io("ws://localhost:3000");
+var socket = io("ws:https://voicecallingapp.herokuapp.com/");
+// var socket = io("ws:localhost:3000/");
 socket.emit("userInformation", userStatus);
  
 
@@ -107,8 +108,8 @@ function toggleConnection(e) {
   console.log("eeee",e)
   if(!userStatus.online){
     userStatus.online = !userStatus.online;
-    window.open('http://localhost:3000?onlineStatus=true','_blanck');
-  
+    window.open('https://voicecallingapp.herokuapp.com/?onlineStatus=true','_blanck');
+    // window.open('http://localhost:3000/?onlineStatus=true','_blanck');
   }
 
   editButtonClass(e, userStatus.online);
