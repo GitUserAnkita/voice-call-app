@@ -4,7 +4,8 @@ const userStatus = {
   mute: false,
   username: "user#" + Math.floor(Math.random() * 999999),
   // username: person,
-  online: false,
+  online: true,
+  // online: false,
 };
 
 const usernameInput = document.getElementById("username");
@@ -18,13 +19,13 @@ usernameLabel.innerText = userStatus.username;
 
 window.onload = (e) => {
   mainFunction(1000);
-  if(window.location.href === 'https://voicecallingapp.herokuapp.com/?onlineStatus=true' ){
-    userStatus.online = true
-  }
+  // if(window.location.href === 'https://voicecallingapp.herokuapp.com/?onlineStatus=true' ){
+  //   userStatus.online = true
+  // }
 };
 
-var socket = io("https://voicecallingapp.herokuapp.com/");
-// var socket = io("ws:localhost:3000/");
+// var socket = io("https://voicecallingapp.herokuapp.com/");
+var socket = io("ws://localhost:3000");
 socket.emit("userInformation", userStatus);
  
 
@@ -100,13 +101,13 @@ usernameLabel.onclick = function () {
 // }
 
 function toggleConnection(e) {
-  // userStatus.online = !userStatus.online;
-  console.log("eeee",e)
-  if(!userStatus.online){
-    userStatus.online = !userStatus.online;
-    window.open('https://voicecallingapp.herokuapp.com/?onlineStatus=true','_blanck');
-    // window.open('http://localhost:3000/?onlineStatus=true','_blanck');
-  }
+  userStatus.online = !userStatus.online;
+  // console.log("eeee",e)
+  // if(!userStatus.online){
+  //   userStatus.online = !userStatus.online;
+  //   window.open('https://voicecallingapp.herokuapp.com/?onlineStatus=true','_blanck');
+  //   // window.open('http://localhost:3000/?onlineStatus=true','_blanck');
+  // }
 
   editButtonClass(e, userStatus.online);
   emitUserInformation();
